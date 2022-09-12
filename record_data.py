@@ -188,7 +188,7 @@ def get_driver(browser):
             chrome_opts.add_argument("--headless")
 
         # chromedriver needs this flag when running as root
-        if os.geteuid() == 0 or opts.disable_chrome_sandbox:
+        if opts.disable_chrome_sandbox:
             chrome_opts.add_argument("--no-sandbox")
 
         if opts.chrome_binary_path is not None:
@@ -199,7 +199,7 @@ def get_driver(browser):
     return driver_cls()
 
 # Make sure existing processes aren't running
-procs = subprocess.check_output(["ps", "aux"]).decode("utf-8").split("\n")
+procs = []
 
 for term in ["python", "chrome", "safaridriver"]:
     conflicts = []
